@@ -1,0 +1,119 @@
+@import 'tailwindcss';
+@import './typography.css';
+@import './animations.css';
+
+/*
+ * Design tokens
+ * Every value in @theme is emitted as a CSS variable on :root
+ * (e.g. --color-accent) AND generates Tailwind utilities (bg-accent, text-muted, border-border).
+ * Change a colour here and it updates everywhere.
+ */
+@theme {
+  /* Restrict the palette to the portfolio colours only. */
+  --color-*: initial;
+
+  /* Solid values only — no translucent whites/blacks, so nothing reads washed-out. */
+  --color-black: #050505;
+  --color-white: #f5f5f2;
+
+  --color-background: var(--color-black);
+  --color-foreground: var(--color-white);
+  /* Star red — sampled from the centre of public/assets/images/main-star.png. */
+  --color-accent: #c72020;
+  --color-border: var(--color-white);
+  /* Secondary text on black: quiet but clearly readable (≈8:1). */
+  --color-muted: #a3a39e;
+  /* Light mode (Hero): deep black ink on the warm-white canvas, and the secondary
+     text that sits on it. */
+  --color-ink: #0b0a09;
+  --color-canvas: #f3f1ec;
+  --color-panel-muted: #57544e;
+  /* Navbar / frame ink: follows the page tone under it (lib/chromeTone.ts). */
+  --color-chrome: var(--chrome-ink);
+  /* Hairline dividers and placeholder surfaces on black. */
+  --color-line: #3a3a37;
+  --color-surface: #141413;
+}
+
+:root {
+  /* Persistent white frame around the viewport (see components/layout/Frame.tsx). */
+  --frame-width: 1px;
+  --frame-inset: clamp(0.5rem, 1.25vw, 1.25rem);
+  /* Space content should keep clear of the frame line. */
+  --frame-gutter: calc(var(--frame-inset) + var(--frame-width) + clamp(1rem, 2.5vw, 2.5rem));
+  /* Navbar: inner top offset and the total height content must clear beneath it. */
+  --nav-top: calc(var(--frame-inset) + clamp(1.25rem, 2.2vw, 2.25rem));
+  --nav-clearance: calc(var(--nav-top) + clamp(3.25rem, 5vw, 5rem));
+  /* Chrome tone (lib/chromeTone.ts): white on the dark page, ink while the page is light. */
+  --chrome-ink: var(--color-foreground);
+}
+
+:root[data-chrome='light'] {
+  --chrome-ink: var(--color-ink);
+}
+
+/*
+ * Hero → Story transition glow (sections/Story): a wide warm dome anchored at the
+ * bottom centre — deep red core, orange body, peach haze, feathered to nothing well
+ * inside the element's own edges (so no box edge ever shows). The scrubbed
+ * transition raises it, widens it, then scales it until its red core floods the viewport.
+ */
+@layer components {
+  .transition-glow {
+    background: radial-gradient(
+      ellipse 50% 100% at 50% 100%,
+      #8f1a0b 0%,
+      #c0300f 16%,
+      #ea5422 36%,
+      rgb(240 112 62 / 0.6) 52%,
+      rgb(244 152 104 / 0.22) 68%,
+      rgb(244 152 104 / 0) 82%
+    );
+  }
+
+  /* Outer frame line follows the chrome tone; the black matte (hides content outside
+     the frame) is only on once the page under it is black. */
+  .frame-line {
+    border-color: var(--color-chrome);
+    box-shadow: 0 0 0 100vmax rgb(5 5 5 / 0);
+    transition:
+      border-color 0.5s ease,
+      box-shadow 0.6s ease;
+  }
+
+  :root[data-matte='on'] .frame-line {
+    box-shadow: 0 0 0 100vmax var(--color-background);
+  }
+}
+
+@layer base {
+  html {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100svh;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-foreground);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  img,
+  video,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+}

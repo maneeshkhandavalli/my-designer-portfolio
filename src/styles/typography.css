@@ -1,0 +1,105 @@
+/*
+ * Typography
+ *
+ * DISPLAY — Old English Text MT (major headings only).
+ *   Commercial Monotype font with no public web-font CDN. It resolves from the
+ *   visitor's installed copy first, then from a self-hosted file once supplied at:
+ *     public/assets/fonts/old-english-text-mt.woff2
+ *   Do not substitute another blackletter face.
+ *
+ * BODY / UI — Imbue (navigation, body copy, descriptions, UI).
+ *   Loaded from Google Fonts in index.html.
+ *
+ * To change a typeface: update its source (@font-face below or the <link> in
+ * index.html) and the matching --font-* token. Components only use the tokens
+ * (font-display / font-body utilities), never family names directly.
+ *
+ * NEMORA (testing only) — prototype files for the planned custom typeface.
+ *   Their outlines are Noto Serif with Nemora metadata, NOT the final custom
+ *   glyphs. Registered here so they can be compared (font-specimen.html, dev only);
+ *   nothing on the site uses them, so browsers never download them for the site.
+ */
+
+@font-face {
+  font-family: 'Old English Text MT';
+  src:
+    local('Old English Text MT'),
+    local('OldEnglishTextMT'),
+    url('/assets/fonts/old-english-text-mt.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nemora Display';
+  src: url('/assets/fonts/Nemora-Display.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nemora Text';
+  src: url('/assets/fonts/Nemora-Text.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@theme {
+  --font-display: 'Old English Text MT', serif;
+  --font-body: 'Imbue', serif;
+  --default-font-family: var(--font-body);
+  /* Prototype tokens for the specimen — not used by the site. */
+  --font-nemora-display: 'Nemora Display', serif;
+  --font-nemora-text: 'Nemora Text', serif;
+
+  /* Fluid type scale */
+  /* Hero name: width-led, capped by height so short/wide screens still fit the Hero.
+     Mobile keeps 15vw so "Khandavalli" never overflows; tablet/desktop goes oversized. */
+  --text-hero: min(15vw, 30svh);
+  --text-hero--line-height: 0.84;
+  --text-hero-lg: min(16.6vw, 33svh);
+  --text-hero-lg--line-height: 0.84;
+  --text-display-2xl: clamp(5rem, 17vw, 21rem);
+  --text-display-2xl--line-height: 0.82;
+  --text-display-xl: clamp(3.5rem, 14vw, 16rem);
+  --text-display-xl--line-height: 0.85;
+  --text-display-lg: clamp(3rem, 9vw, 9rem);
+  --text-display-lg--line-height: 0.9;
+  --text-display-md: clamp(2.25rem, 5vw, 5rem);
+  --text-display-md--line-height: 1;
+  --text-body-lg: clamp(1.125rem, 1.4vw, 1.5rem);
+  --text-body-lg--line-height: 1.45;
+}
+
+/* Small uppercase Imbue label used for navigation, captions and section meta. */
+@utility label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Navbar wordmark + MENU: a real part of the composition, not metadata. */
+@utility nav-text {
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1.2vw, 1.1875rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    /* Blackletter has no bold/italic cuts — never fake them. */
+    font-synthesis: none;
+  }
+}

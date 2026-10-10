@@ -1,0 +1,27 @@
+/*
+ * Motion tokens shared by CSS transitions.
+ * GSAP equivalents live in src/lib/gsap.ts — keep the two in step.
+ */
+@theme {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+:root {
+  --duration-fast: 200ms;
+  --duration-base: 500ms;
+  --duration-slow: 1000ms;
+}
+
+/* Respect reduced-motion for CSS-driven motion. GSAP timelines handle this via gsap.matchMedia().
+   True zero durations: a tiny non-zero value turns visibility/display flips into transitions,
+   which leaves elements momentarily hidden (and unfocusable) in the frame they appear. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+  }
+}

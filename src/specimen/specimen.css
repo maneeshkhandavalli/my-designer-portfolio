@@ -1,0 +1,3 @@
+/* Temporary font specimen: the site's shared styles; Tailwind scans this folder too
+   (only the portfolio's own entry, styles/site.css, leaves it out). */
+@import '../styles/globals.css';

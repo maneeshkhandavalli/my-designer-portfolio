@@ -1,0 +1,4 @@
+/* The portfolio's stylesheet: the shared styles, without the temporary font specimen's
+   utilities (font-specimen.html / src/specimen imports globals.css on its own). */
+@import './globals.css';
+@source not '../specimen';
