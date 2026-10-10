@@ -86,7 +86,8 @@ export function SiteNav({ menuOpen, onMenuToggle }: SiteNavProps) {
         >
           <span className="block overflow-hidden">
             <span data-nav-item className="block">
-              <StarMark className="h-[clamp(1.875rem,2.7vw,2.625rem)] w-auto transition-transform duration-700 ease-out-expo group-hover:rotate-60" />
+              {/* data-star-home: the StarCursor's dock — it lifts this star off and lands back on it. */}
+              <StarMark data-star-home className="h-[clamp(1.875rem,2.7vw,2.625rem)] w-auto transition-transform duration-700 ease-out-expo group-hover:rotate-60" />
             </span>
           </span>
         </a>
