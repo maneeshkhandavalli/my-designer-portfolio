@@ -13,7 +13,7 @@ type MenuOverlayProps = {
 const YEAR = new Date().getFullYear()
 
 /**
- * Full-screen editorial menu inside the frame: WORK / ABOUT / SKILLS / CONTACT
+ * Full-screen editorial menu inside the frame: WORK / ABOUT / MIDNIGHT LABS / MY CREATIONS / SKILLS / CONTACT
  * set very large, revealed with a clip wipe and a staggered rise.
  * Interim stand-in for the React Bits StaggeredMenu.
  * Placeholder for the React Bits StaggeredMenu — keep the id, open/close contract,
@@ -83,8 +83,9 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
       className="invisible fixed inset-(--frame-inset) z-40 flex flex-col justify-between bg-background px-[calc(var(--frame-gutter)-var(--frame-inset))] pt-[calc(var(--nav-clearance)-var(--frame-inset))] pb-[calc(var(--frame-gutter)-var(--frame-inset))] opacity-0"
     >
       <nav aria-label="Menu" className="flex flex-1 items-center">
-        {/* Poster scale: height-led on desktop (all four always fit), width-led on phones. */}
-        <ol className="flex flex-col gap-y-[0.05em] text-[min(24vw,19.5svh)] leading-[0.85]">
+        {/* Poster scale: height-led on desktop (all six always fit — the block is as tall as four were
+            at 19.5svh), width-led on phones (the longest, MIDNIGHT LABS, still fits). */}
+        <ol className="flex flex-col gap-y-[0.05em] text-[min(17.5vw,12.9svh)] leading-[0.85]">
           {NAV_LINKS.map(({ id, label }, index) => (
             <li key={id} className="-my-[0.06em] overflow-hidden py-[0.06em]">
               <a

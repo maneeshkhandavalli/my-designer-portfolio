@@ -3,6 +3,7 @@ import { AppShell } from '@/components/layout/AppShell'
 import { Contact } from '@/components/sections/Contact/Contact'
 import { Hero } from '@/components/sections/Hero/Hero'
 import { MidnightLabs } from '@/components/sections/MidnightLabs/MidnightLabs'
+import { MyCreations } from '@/components/sections/MyCreations/MyCreations'
 import { Projects } from '@/components/sections/Projects/Projects'
 import { Skills } from '@/components/sections/Skills/Skills'
 import { Statement } from '@/components/sections/Statement/Statement'
@@ -18,6 +19,7 @@ export default function App() {
         <Statement />
         <Projects />
         <MidnightLabs />
+        <MyCreations />
         <Skills />
         <Contact />
       </AppShell>

@@ -8,6 +8,7 @@ export const SECTIONS = [
   { id: 'statement', label: 'UI * UX * Stunning' },
   { id: 'work', label: 'Featured Work' },
   { id: 'midnight-labs', label: 'Midnight Labs' },
+  { id: 'creations', label: 'My Creations' },
   { id: 'skills', label: 'Skills' },
   { id: 'contact', label: 'Contact' },
 ] as const
@@ -20,6 +21,8 @@ type NavLink = { id: SectionId; label: string }
 export const NAV_LINKS: readonly NavLink[] = [
   { id: 'work', label: 'Work' },
   { id: 'story', label: 'About' },
+  { id: 'midnight-labs', label: 'Midnight Labs' },
+  { id: 'creations', label: 'My Creations' },
   { id: 'skills', label: 'Skills' },
   { id: 'contact', label: 'Contact' },
 ]

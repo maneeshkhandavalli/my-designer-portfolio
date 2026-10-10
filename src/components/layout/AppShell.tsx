@@ -3,6 +3,7 @@ import { FluidCursor } from '@/components/effects/FluidCursor/FluidCursor'
 import { MenuOverlay } from '@/components/navigation/MenuOverlay'
 import { SiteNav } from '@/components/navigation/SiteNav'
 import { useChromeTone } from '@/hooks/useChromeTone'
+import { useFluidCursorHeld } from '@/lib/fluidHold'
 import { Footer } from './Footer'
 import { Frame } from './Frame'
 import { Loader } from './Loader'
@@ -17,6 +18,8 @@ export function AppShell({ children }: AppShellProps) {
   const toggleMenu = useCallback(() => setMenuOpen((open) => !open), [])
   const closeMenu = useCallback(() => setMenuOpen(false), [])
   useChromeTone(menuOpen)
+  // A contained fluid experiment (My Creations) holds the page-wide field while the pointer is on it.
+  const fluidHeld = useFluidCursorHeld()
 
   return (
     <>
@@ -34,7 +37,7 @@ export function AppShell({ children }: AppShellProps) {
         {children}
       </main>
       <Footer inert={menuOpen} />
-      <FluidCursor paused={menuOpen} />
+      <FluidCursor paused={menuOpen || fluidHeld} />
     </>
   )
 }
