@@ -8,7 +8,7 @@ export function NemoraPreview() {
     <div className="@container absolute inset-0 flex flex-col justify-between p-[5%]">
       <div className="label flex justify-between gap-6 text-muted">
         <span>Typeface</span>
-        <span className="text-accent">In development</span>
+        <span className="text-accent-light">In development</span>
       </div>
 
       <div>

@@ -19,7 +19,7 @@ const ENTRIES = SKILL_GROUPS.reduce((sum, group) => sum + group.skills.length, 0
  * On phones: stacked, no sticky, no contents list.
  *
  * Motion: the groups use the shared reveals (lib/reveal) — in, reversed on leave,
- * replayed on return. The sticky column is revealed on the *section's* bounds instead:
+ * replayed on return; each group's entries enter as one staggered list (one trigger). The sticky column is revealed on the *section's* bounds instead:
  * reveals measure their own element, and a stuck element would "leave" while still on
  * screen. Reduced motion: nothing hidden; the contents marker still follows (a colour
  * change, no movement). No pin, no blur, no canvas.
@@ -132,12 +132,12 @@ export function Skills() {
                   className="relative flex items-baseline gap-4 border-b border-line py-[min(0.625rem,1.1svh)]"
                 >
                   <span
-                    className={`label w-6 transition-colors duration-500 motion-reduce:transition-none ${current ? 'text-accent' : 'text-muted'}`}
+                    className={`label w-6 transition-colors duration-500 motion-reduce:transition-none ${current ? 'text-accent-light' : 'text-muted'}`}
                   >
                     {pad(index + 1)}
                   </span>
                   <span
-                    className={`text-[clamp(0.95rem,1.05vw,1.1rem)] transition-colors duration-500 motion-reduce:transition-none ${current ? 'text-foreground' : 'text-muted'}`}
+                    className={`text-[clamp(1rem,min(0.75rem+0.45vw,2.4svh),1.375rem)] leading-[1.5] tracking-[0.01em] transition-colors duration-500 motion-reduce:transition-none ${current ? 'text-foreground' : 'text-muted'}`}
                   >
                     {group.title}
                   </span>
@@ -164,7 +164,7 @@ export function Skills() {
               >
                 <div aria-hidden="true" data-reveal="rule" className="h-px bg-line" />
                 <div className="mt-6 grid grid-cols-[auto_1fr] items-baseline gap-x-5 gap-y-3 md:grid-cols-[auto_1fr_auto]">
-                  <span data-reveal="fade" className="label text-accent">
+                  <span data-reveal="fade" className="label text-accent-light">
                     {number}
                   </span>
                   <h3
@@ -179,12 +179,10 @@ export function Skills() {
                   </span>
                 </div>
 
-                <ul className="mt-8 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
+                <ul data-reveal="group" data-reveal-delay="0.15" className="mt-8 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
                   {group.skills.map((skill, item) => (
                     <li
                       key={skill.name}
-                      data-reveal="rise"
-                      data-reveal-delay={String(0.15 + item * 0.05)}
                       className="grid grid-cols-[2.75rem_1fr] items-baseline gap-x-3 border-t border-line py-3.5"
                     >
                       <span className="label text-muted">

@@ -72,21 +72,35 @@
   --text-display-md--line-height: 1;
   --text-body-lg: clamp(1.125rem, 1.4vw, 1.5rem);
   --text-body-lg--line-height: 1.45;
+
+  /* Readable Imbue. Imbue is condensed with a small x-height, so at a given size it reads
+     smaller than a regular serif — supporting text needs more size than usual. These keep
+     growing with the viewport up to large desktops: the display type beside them is sized
+     in vw, so a low cap leaves the copy looking tiny on wide screens.
+     (Reference: 390 / 1440 / 1920 / 2560px wide.) */
+  /* Supporting copy: descriptions and paragraphs beside the display type (18 / 21.5 / 24 / 26px). */
+  --text-support: clamp(1.125rem, 0.85rem + 0.55vw, 1.625rem);
+  --text-support--line-height: 1.55;
+  /* Small print: technical notes, asides, feature lists — secondary, still easy to read (16 / 18.5 / 20.5 / 22px). */
+  --text-detail: clamp(1rem, 0.75rem + 0.45vw, 1.375rem);
+  --text-detail--line-height: 1.5;
+  --text-detail--letter-spacing: 0.01em;
 }
 
-/* Small uppercase Imbue label used for navigation, captions and section meta. */
+/* Small uppercase Imbue label: indices, captions, section meta, stacks, contact handles.
+   Stays secondary but legible — 13 / 15 / 17 / 18px at 390 / 1440 / 1920 / 2560px wide. */
 @utility label {
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  line-height: 1.2;
-  letter-spacing: 0.16em;
+  font-size: clamp(0.8125rem, 0.6rem + 0.38vw, 1.125rem);
+  line-height: 1.35;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 /* Navbar wordmark + MENU: a real part of the composition, not metadata. */
 @utility nav-text {
   font-family: var(--font-body);
-  font-size: clamp(0.9375rem, 1.2vw, 1.1875rem);
+  font-size: clamp(0.9375rem, 0.6rem + 0.6vw, 1.3125rem);
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0.2em;

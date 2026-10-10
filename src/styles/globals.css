@@ -20,14 +20,18 @@
   --color-foreground: var(--color-white);
   /* Star red — sampled from the centre of public/assets/images/main-star.png. */
   --color-accent: #c72020;
+  /* The same crimson, lighter — for small crimson text on black only (≈4.7:1; the star red
+     is 3.6:1 there). Rules, stars and fills, and crimson on the warm white (5.1:1), keep the accent. */
+  --color-accent-light: #df3a3a;
   --color-border: var(--color-white);
-  /* Secondary text on black: quiet but clearly readable (≈8:1). */
-  --color-muted: #a3a39e;
+  /* Secondary text on black: quiet but clearly readable (≈9.3:1). */
+  --color-muted: #b1b0aa;
   /* Light mode (Hero): deep black ink on the warm-white canvas, and the secondary
      text that sits on it. */
   --color-ink: #0b0a09;
   --color-canvas: #f3f1ec;
-  --color-panel-muted: #57544e;
+  /* ≈8.2:1 on the canvas. */
+  --color-panel-muted: #4a4742;
   /* Navbar / frame ink: follows the page tone under it (lib/chromeTone.ts). */
   --color-chrome: var(--chrome-ink);
   /* Hairline dividers and placeholder surfaces on black. */

@@ -2,7 +2,8 @@ import { useRef, useState, type ComponentType, type KeyboardEvent } from 'react'
 import { Section } from '@/components/layout/Section'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { useReveal } from '@/hooks/useReveal'
-import { gsap, MOTION, useGSAP } from '@/lib/gsap'
+import { setPageTone } from '@/lib/chromeTone'
+import { gsap, MOTION, ScrollTrigger, useGSAP } from '@/lib/gsap'
 import { FluidSurfacePreview } from './FluidSurfacePreview'
 import { NemoraPreview } from './NemoraPreview'
 import { CREATIONS, type CreationPreview } from './myCreationsData'
@@ -26,6 +27,11 @@ const PREVIEWS: Record<CreationPreview, ComponentType> = {
  *   details  what it is and how it works, under the index
  * On phones: index, preview, details, stacked.
  *
+ * Ground: the warm-white canvas — the light studio between the dark Midnight Labs and
+ * Skills — with the stage kept black, a dark screen the experiments run in (they are
+ * made for a dark surface). Chrome: light (ink navbar and frame, no matte) while this
+ * section is under the navbar, like the Hero and Contact.
+ *
  * Scroll: the shared reveals (lib/reveal) — in on enter, reversed on leave, replayed
  * on return. Switching: the stage and details fade out together, then the stage is
  * uncovered left → right and the details rise back. Reduced motion: instant swaps,
@@ -40,6 +46,23 @@ export function MyCreations() {
   const pending = useRef<string | null>(null)
   const reducedMotion = usePrefersReducedMotion()
   useReveal(rootRef)
+
+  // Light chrome while the section is under the navbar; the dark page either side of it.
+  // On refresh only claim the tone when here (Story's or Contact's trigger owns it elsewhere).
+  useGSAP(
+    () => {
+      ScrollTrigger.create({
+        trigger: rootRef.current,
+        start: 'top 6%',
+        end: 'bottom 6%',
+        onToggle: ({ isActive }) => setPageTone(!isActive, !isActive),
+        onRefresh: ({ isActive }) => {
+          if (isActive) setPageTone(false, false)
+        },
+      })
+    },
+    { scope: rootRef },
+  )
 
   const firstId = CREATIONS[0]?.id ?? ''
   // `selected` follows the index at once; `shown` swaps once the old content has faded.
@@ -118,11 +141,11 @@ export function MyCreations() {
       ref={rootRef}
       id="creations"
       aria-labelledby="creations-heading"
-      className="px-(--frame-gutter) pt-[18svh] pb-[14svh]"
+      className="bg-canvas px-(--frame-gutter) pt-[18svh] pb-[14svh] text-ink"
     >
       {/* Intro */}
       <header className="grid grid-cols-1 gap-y-10 md:grid-cols-12 md:gap-x-6">
-        <div className="label flex justify-between gap-6 text-muted md:col-span-12">
+        <div className="label flex justify-between gap-6 text-panel-muted md:col-span-12">
           <span data-reveal="fade">05 — My Creations</span>
           <span data-reveal="fade" data-reveal-delay="0.15">
             The lab
@@ -150,10 +173,10 @@ export function MyCreations() {
       <div className="mt-[14svh] grid grid-cols-1 gap-y-10 md:grid-cols-12 md:grid-rows-[auto_1fr] md:gap-x-6 md:gap-y-0">
         {/* Index */}
         <div className="md:col-span-4 md:row-start-1">
-          <p data-reveal="fade" className="label mb-4 text-muted">
+          <p data-reveal="fade" className="label mb-4 text-panel-muted">
             Index ({pad(CREATIONS.length)})
           </p>
-          <div role="tablist" aria-label="Creations" aria-orientation="vertical" className="border-t border-line">
+          <div role="tablist" aria-label="Creations" aria-orientation="vertical" className="border-t border-ink/15">
             {CREATIONS.map((entry, index) => {
               const active = entry.id === selected
               return (
@@ -172,22 +195,22 @@ export function MyCreations() {
                   onKeyDown={(event) => onKeyDown(event, index)}
                   data-reveal="rise"
                   data-reveal-delay={String(0.1 + index * 0.08)}
-                  className="group relative grid w-full grid-cols-[2.25rem_1fr] items-baseline gap-x-4 border-b border-line py-6 text-left"
+                  className="group relative grid w-full grid-cols-[2.25rem_1fr] items-baseline gap-x-4 border-b border-ink/15 py-6 text-left"
                 >
-                  <span className={`label transition-colors duration-500 ${active ? 'text-accent' : 'text-muted'}`}>
+                  <span className={`label transition-colors duration-500 ${active ? 'text-accent' : 'text-panel-muted'}`}>
                     {pad(index + 1)}
                   </span>
                   <span>
                     <span
                       className={`block font-display text-[clamp(2rem,3.2vw,3.75rem)] leading-[0.95] font-normal [font-synthesis:none] transition-colors duration-500 ${
-                        active ? 'text-foreground' : 'text-muted group-hover:text-foreground group-focus-visible:text-foreground'
+                        active ? 'text-ink' : 'text-panel-muted group-hover:text-ink group-focus-visible:text-ink'
                       }`}
                     >
                       {entry.title}
                     </span>
-                    <span className="label mt-3 flex flex-wrap gap-x-4 gap-y-1 text-muted">
+                    <span className="label mt-3 flex flex-wrap gap-x-4 gap-y-1 text-panel-muted">
                       <span>{entry.kind}</span>
-                      <span className={entry.forthcoming ? 'text-muted' : 'text-foreground'}>{entry.status}</span>
+                      <span className={entry.forthcoming ? 'text-panel-muted' : 'text-ink'}>{entry.status}</span>
                     </span>
                   </span>
                   <span
@@ -207,7 +230,7 @@ export function MyCreations() {
           <div
             data-reveal="clip-x"
             data-reveal-delay="0.15"
-            className="relative aspect-[4/5] overflow-hidden border border-line bg-background sm:aspect-[4/3] md:aspect-[3/2]"
+            className="relative aspect-[4/5] overflow-hidden border border-line bg-background text-foreground sm:aspect-[4/3] md:aspect-[3/2]"
           >
             <div ref={stageRef} className="absolute inset-0">
               {Preview && <Preview key={shown.id} />}
@@ -225,19 +248,19 @@ export function MyCreations() {
           >
             {creation && (
               <>
-                <p className="text-[clamp(1.125rem,1.45vw,1.5rem)] leading-[1.3]">{creation.summary}</p>
-                <ol className="mt-8 space-y-4 border-t border-line pt-6">
+                <p className="text-[clamp(1.1875rem,1.45vw,1.875rem)] leading-[1.3]">{creation.summary}</p>
+                <ol className="mt-8 space-y-4 border-t border-ink/15 pt-6">
                   {creation.notes.map((note, index) => (
                     <li key={note} className="grid grid-cols-[2.25rem_1fr] gap-x-4">
-                      <span className="label pt-[0.35em] text-muted">{pad(index + 1)}</span>
-                      <span className="text-[clamp(0.95rem,1.05vw,1.1rem)] leading-[1.5] text-muted">{note}</span>
+                      <span className="label pt-[0.35em] text-panel-muted">{pad(index + 1)}</span>
+                      <span className="text-support text-panel-muted">{note}</span>
                     </li>
                   ))}
                 </ol>
                 {creation.aside && (
-                  <p className="mt-6 max-w-[48ch] text-[0.9rem] leading-[1.5] text-muted">{creation.aside}</p>
+                  <p className="mt-6 max-w-[48ch] text-detail text-panel-muted">{creation.aside}</p>
                 )}
-                {creation.stack && <p className="label mt-6 text-muted">{creation.stack.join(' · ')}</p>}
+                {creation.stack && <p className="label mt-6 text-panel-muted">{creation.stack.join(' · ')}</p>}
               </>
             )}
           </div>

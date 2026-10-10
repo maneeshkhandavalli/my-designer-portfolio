@@ -27,7 +27,10 @@ type CopyState = 'idle' | 'copied' | 'failed'
  * Chrome: while this section is under the navbar the page tone is light (ink navbar
  * and frame line, no black matte) — the same state as over the Hero. Story sets the
  * tone above; this takes over from the top of this section to the end of the page.
- * Motion: the shared reveals only (lib/reveal); reduced motion shows all at once.
+ * Motion: the shared reveals (lib/reveal); "talk." settles in from the right with the
+ * scroll — the closing movement (clipped at the section's sides, so it never widens the
+ * page) — and the profiles enter as one group. The Footer stays
+ * still, so its links are there at once. Reduced motion: all at once.
  */
 export function Contact() {
   const rootRef = useRef<HTMLElement>(null)
@@ -72,7 +75,7 @@ export function Contact() {
       ref={rootRef}
       id="contact"
       aria-labelledby="contact-heading"
-      className="bg-canvas px-(--frame-gutter) pt-[20svh] pb-[16svh] text-ink"
+      className="overflow-x-clip bg-canvas px-(--frame-gutter) pt-[20svh] pb-[16svh] text-ink"
     >
       <div className="label flex justify-between gap-6 text-panel-muted">
         <span data-reveal="fade">07 — Contact</span>
@@ -81,13 +84,15 @@ export function Contact() {
         </span>
       </div>
 
-      <h2
-        id="contact-heading"
-        data-reveal="lines"
-        className="mt-10 text-[clamp(4rem,16vw,19rem)] leading-[0.82] lowercase"
-      >
-        <span className="block">let’s</span>
-        <span className="block pl-[18%] md:pl-[34%]">talk.</span>
+      {/* Each word splits on its own: a re-split (fonts, resize) rebuilds only the inside
+          of its span, so the span "talk." keeps its settle. */}
+      <h2 id="contact-heading" className="mt-10 text-[clamp(4rem,16vw,19rem)] leading-[0.82] lowercase">
+        <span data-reveal="lines" className="block">
+          let’s
+        </span>
+        <span data-reveal="lines" data-reveal-delay="0.12" data-settle-x="7" className="block pl-[18%] md:pl-[34%]">
+          talk.
+        </span>
       </h2>
       <div aria-hidden="true" data-reveal="rule" data-reveal-delay="0.2" className="mt-12 h-px bg-accent" />
 
@@ -130,9 +135,9 @@ export function Contact() {
             </span>
           </div>
 
-          <ul aria-label="Profiles" className="mt-[8svh] border-t border-ink/15">
+          <ul aria-label="Profiles" data-reveal="group" data-reveal-delay="0.1" className="mt-[8svh] border-t border-ink/15">
             {PROFILES.map((profile, index) => (
-              <li key={profile.name} data-reveal="rise" data-reveal-delay={String(0.1 + index * 0.08)}>
+              <li key={profile.name}>
                 <a
                   href={profile.href}
                   target="_blank"

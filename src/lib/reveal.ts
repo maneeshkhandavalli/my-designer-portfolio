@@ -12,8 +12,16 @@
  *   clip-x  uncovers left → right (clip-path); a [data-reveal-zoom] child settles from a slight scale
  *   clip-y  uncovers bottom → top, same zoom option
  *   rule    a hairline draws from its left end
+ *   group   one trigger for a list: its children (or its [data-reveal-item]s) rise in
+ *           a short stagger — instead of one trigger per row
  *
  * Optional `data-reveal-delay="0.15"` (s) staggers elements that enter together.
+ *
+ * Settle (scroll-linked, scrubbed — it follows the scroll both ways): an element with
+ * `data-settle-y="8"` (svh) or `data-settle-x="6"` (vw) starts that far off and comes to
+ * rest as its parent rises from the bottom edge to 35% of the viewport. For the few
+ * headings that carry a section boundary — used sparingly. Its parent is the trigger,
+ * so the moving element never shifts its own (or its reveal's) trigger.
  * Inside a horizontally scrolling track pass its tween as `containerAnimation`: the
  * triggers then follow the track (left/right edges) instead of the page.
  * Callers gate this on prefers-reduced-motion: with reduced motion nothing is hidden.
@@ -26,12 +34,20 @@ import { gsap, MOTION, SplitText } from '@/lib/gsap'
 export type RevealOptions = {
   /** The tween of a pinned horizontal track, when the scope lives inside one. */
   containerAnimation?: gsap.core.Tween
+  /**
+   * The pinned element, when the scope lives inside one but its reveals follow the page
+   * scroll (e.g. an intro inside a pinned track). Lets ScrollTrigger measure positions
+   * correctly when it refreshes while the page is scrolled past the pin (a reload that
+   * restores the scroll position, a resize further down): without it they come out
+   * shifted by the pin's length and the reveals stay hidden on the way back up.
+   */
+  pinnedContainer?: Element
 }
 
 const VERTICAL = { start: 'top 90%', end: 'bottom 6%' }
 const HORIZONTAL = { start: 'left 94%', end: 'right 6%' }
 
-export function createReveals(scope: Element, { containerAnimation }: RevealOptions = {}) {
+export function createReveals(scope: Element, { containerAnimation, pinnedContainer }: RevealOptions = {}) {
   const track = containerAnimation?.targets()[0] as Element | undefined
   const trackX = track ? Number(gsap.getProperty(track, 'x')) || 0 : 0
 
@@ -46,9 +62,12 @@ export function createReveals(scope: Element, { containerAnimation }: RevealOpti
     const followTrack = containerAnimation !== undefined && !inViewAtRest
     const pinEnd = containerAnimation?.scrollTrigger
     const range = followTrack ? HORIZONTAL : pinEnd ? { start: VERTICAL.start, end: () => pinEnd.end } : VERTICAL
+    // Page-scroll reveals inside the track's pin (in view at rest) are measured against it.
+    const pinned = followTrack ? undefined : (pinnedContainer ?? (pinEnd?.pin as Element | undefined))
     const scrollTrigger = {
       trigger: element,
       containerAnimation: followTrack ? containerAnimation : undefined,
+      pinnedContainer: pinned,
       ...range,
       toggleActions: 'play reverse play reverse',
     }
@@ -95,6 +114,21 @@ export function createReveals(scope: Element, { containerAnimation }: RevealOpti
         break
       }
 
+      case 'group': {
+        const marked = element.querySelectorAll('[data-reveal-item]')
+        const items = marked.length > 0 ? marked : element.children
+        gsap.from(items, {
+          autoAlpha: 0,
+          y: 24,
+          duration: MOTION.duration.slow,
+          ease: MOTION.ease.out,
+          stagger: 0.07,
+          delay,
+          scrollTrigger,
+        })
+        break
+      }
+
       case 'rule':
         gsap.from(element, {
           scaleX: 0,
@@ -106,5 +140,28 @@ export function createReveals(scope: Element, { containerAnimation }: RevealOpti
         })
         break
     }
+  })
+
+  // Settle: scrubbed arrivals (page scroll only — none sit inside a horizontal track).
+  if (containerAnimation) return
+  scope.querySelectorAll<HTMLElement>('[data-settle-x], [data-settle-y]').forEach((element) => {
+    const x = Number(element.dataset.settleX ?? 0) || 0
+    const y = Number(element.dataset.settleY ?? 0) || 0
+    gsap.fromTo(
+      element,
+      { x: () => (x * innerWidth) / 100, y: () => (y * innerHeight) / 100 },
+      {
+        x: 0,
+        y: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: element.parentElement ?? element,
+          start: 'top bottom',
+          end: 'top 35%',
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      },
+    )
   })
 }
