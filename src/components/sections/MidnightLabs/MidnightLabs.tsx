@@ -76,7 +76,7 @@ export function MidnightLabs() {
           <p
             data-reveal="lines"
             data-reveal-delay="0.35"
-            className="mt-6 max-w-[46ch] text-support text-muted"
+            className="readable mt-6 max-w-[46ch] text-support text-muted"
           >
             {AGENCY.built}
           </p>
@@ -192,7 +192,7 @@ function AgencyPanel({ piece, number, className }: { piece: AgencyPiece; number:
       )}
 
       <figcaption className="mt-5 grid gap-y-3">
-        <p data-reveal="lines" data-reveal-delay="0.2" className="max-w-[52ch] text-support">
+        <p data-reveal="lines" data-reveal-delay="0.2" className="readable max-w-[52ch] text-support">
           {description}
         </p>
         <p data-reveal="rise" data-reveal-delay="0.3" className="label text-muted">
@@ -227,7 +227,7 @@ function ClientRow({ work, number }: { work: ClientWork; number: string }) {
       </div>
 
       <div className="col-span-2 md:col-span-4">
-        <p className="max-w-[44ch] text-support text-muted">
+        <p className="readable max-w-[44ch] text-support text-muted">
           {description}
         </p>
         {stack && (

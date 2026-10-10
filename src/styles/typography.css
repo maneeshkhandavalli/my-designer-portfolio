@@ -87,11 +87,24 @@
   --text-detail--letter-spacing: 0.01em;
 }
 
+/* Imbue at reading sizes (supporting copy, lists, notes). With optical sizing on auto, text
+   at 20–30px gets a display cut and the regular weight: narrow, fine-haired and faint on
+   screen at those sizes. This sets the text cut (opsz 10: sturdier hairlines, a touch wider),
+   weight 500 and a hair of tracking. Not for the large Imbue lines or the display face. */
+@utility readable {
+  font-weight: 500;
+  font-variation-settings: 'opsz' 10;
+  letter-spacing: 0.01em;
+}
+
 /* Small uppercase Imbue label: indices, captions, section meta, stacks, contact handles.
-   Stays secondary but legible — 13 / 15 / 17 / 18px at 390 / 1440 / 1920 / 2560px wide. */
+   Stays secondary but legible — 13 / 15 / 17 / 18px at 390 / 1440 / 1920 / 2560px wide —
+   in the text cut at weight 500 (see `readable`), so thin caps don't fade into the ground. */
 @utility label {
   font-family: var(--font-body);
   font-size: clamp(0.8125rem, 0.6rem + 0.38vw, 1.125rem);
+  font-weight: 500;
+  font-variation-settings: 'opsz' 10;
   line-height: 1.35;
   letter-spacing: 0.14em;
   text-transform: uppercase;

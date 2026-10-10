@@ -137,7 +137,7 @@ export function Skills() {
                     {pad(index + 1)}
                   </span>
                   <span
-                    className={`text-[clamp(1rem,min(0.75rem+0.45vw,2.4svh),1.375rem)] leading-[1.5] tracking-[0.01em] transition-colors duration-500 motion-reduce:transition-none ${current ? 'text-foreground' : 'text-muted'}`}
+                    className={`readable text-[clamp(1rem,min(0.75rem+0.45vw,2.4svh),1.375rem)] leading-[1.5] transition-colors duration-500 motion-reduce:transition-none ${current ? 'text-foreground' : 'text-muted'}`}
                   >
                     {group.title}
                   </span>

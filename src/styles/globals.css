@@ -24,14 +24,14 @@
      is 3.6:1 there). Rules, stars and fills, and crimson on the warm white (5.1:1), keep the accent. */
   --color-accent-light: #df3a3a;
   --color-border: var(--color-white);
-  /* Secondary text on black: quiet but clearly readable (≈9.3:1). */
-  --color-muted: #b1b0aa;
+  /* Secondary text on black: quieter than the white, still bright enough to read with ease (≈12:1). */
+  --color-muted: #c8c7c1;
   /* Light mode (Hero): deep black ink on the warm-white canvas, and the secondary
      text that sits on it. */
   --color-ink: #0b0a09;
   --color-canvas: #f3f1ec;
-  /* ≈8.2:1 on the canvas. */
-  --color-panel-muted: #4a4742;
+  /* ≈10:1 on the canvas. */
+  --color-panel-muted: #3d3a36;
   /* Navbar / frame ink: follows the page tone under it (lib/chromeTone.ts). */
   --color-chrome: var(--chrome-ink);
   /* Hairline dividers and placeholder surfaces on black. */

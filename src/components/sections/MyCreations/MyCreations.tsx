@@ -253,12 +253,12 @@ export function MyCreations() {
                   {creation.notes.map((note, index) => (
                     <li key={note} className="grid grid-cols-[2.25rem_1fr] gap-x-4">
                       <span className="label pt-[0.35em] text-panel-muted">{pad(index + 1)}</span>
-                      <span className="text-support text-panel-muted">{note}</span>
+                      <span className="readable text-support text-panel-muted">{note}</span>
                     </li>
                   ))}
                 </ol>
                 {creation.aside && (
-                  <p className="mt-6 max-w-[48ch] text-detail text-panel-muted">{creation.aside}</p>
+                  <p className="readable mt-6 max-w-[48ch] text-detail text-panel-muted">{creation.aside}</p>
                 )}
                 {creation.stack && <p className="label mt-6 text-panel-muted">{creation.stack.join(' · ')}</p>}
               </>

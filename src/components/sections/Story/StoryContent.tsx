@@ -86,7 +86,7 @@ export function StoryContent() {
         <p data-story-label className="label mb-6 text-accent-light">
           The story
         </p>
-        <p data-story-copy className="text-[clamp(1.25rem,1.85vw,1.875rem)] leading-[1.42]">
+        <p data-story-copy className="readable text-[clamp(1.25rem,1.85vw,1.875rem)] leading-[1.42]">
           {STORY_COPY}
         </p>
       </div>

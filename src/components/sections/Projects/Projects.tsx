@@ -217,12 +217,12 @@ function ProjectSpread({ project, number }: { project: Project; number: string }
         <p
           data-reveal="lines"
           data-reveal-delay="0.4"
-          className="mt-6 max-w-[46ch] text-[clamp(1.125rem,min(0.85rem+0.55vw,2.4svh),1.625rem)] leading-[1.5]"
+          className="readable mt-6 max-w-[46ch] text-[clamp(1.125rem,min(0.85rem+0.55vw,2.4svh),1.625rem)] leading-[1.5]"
         >
           {description}
         </p>
 
-        <ul className="mt-6 max-w-[46ch] space-y-2 text-[clamp(1rem,min(0.75rem+0.45vw,2.1svh),1.375rem)] leading-[1.45] text-muted">
+        <ul className="readable mt-6 max-w-[46ch] space-y-2 text-[clamp(1rem,min(0.75rem+0.45vw,2.1svh),1.375rem)] leading-[1.45] text-muted">
           {highlights.map((line, index) => (
             <li key={line} data-reveal="rise" data-reveal-delay={String(0.5 + index * 0.08)} className="flex gap-3">
               <span aria-hidden="true" className="text-accent">
