@@ -1,0 +1,5 @@
+# Local Python environment for the Nemora tools (see README.md).
+.venv/
+__pycache__/
+# Compiled fonts are regenerated from sources/ by tools/build.py.
+build/

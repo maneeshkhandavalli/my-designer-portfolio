@@ -4,8 +4,8 @@
  *    a CPU stable-fluids solver on a 16px grid; site-wide its flow becomes a displacement
  *    map for an SVG filter applied with backdrop-filter (Chromium, fine pointer, motion
  *    allowed). It is not WebGL.
- *  - Nemora: the custom typeface in progress. The files in public/assets/fonts are
- *    temporary Noto Serif-based prototypes, so nothing here shows or names them as the
+ *  - Nemora: the custom typeface in progress. The prototype files (src/specimen/fonts)
+ *    are renamed Noto Serif outlines, so nothing here shows or names them as the
  *    finished face.
  *
  * To add a creation: append an entry here and register its preview in PREVIEWS

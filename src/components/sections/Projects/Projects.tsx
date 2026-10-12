@@ -1,15 +1,17 @@
+import { useLenis } from 'lenis/react'
 import { useRef } from 'react'
 import { Section } from '@/components/layout/Section'
 import { RollText } from '@/components/navigation/RollText'
 import { gsap, useGSAP } from '@/lib/gsap'
 import { createReveals } from '@/lib/reveal'
 import { PROJECTS, type Project } from './projectData'
+import { usePanelSteps, type PanelSteps } from './usePanelSteps'
 
 /** Horizontal showcase only with room for it and motion allowed (matches the `md:motion-safe:` classes). */
 const HORIZONTAL = '(min-width: 48rem) and (prefers-reduced-motion: no-preference)'
 /** Stacked layout (phones) with motion allowed: the same reveals, triggered by the page scroll. */
 const STACKED = '(max-width: 47.99rem) and (prefers-reduced-motion: no-preference)'
-/** Vertical scroll per pixel of horizontal travel — above 1 slows the pass so it reads as deliberate. */
+/** Vertical scroll per pixel of horizontal travel (scrollbar, keyboard, touch — the wheel pages, see usePanelSteps). */
 const PACE = 1.25
 
 const pad = (n: number) => String(n).padStart(2, '0')
@@ -17,12 +19,17 @@ const pad = (n: number) => String(n).padStart(2, '0')
 /**
  * 03 — Featured Work. A horizontal showcase: the section pins and vertical scroll
  * drives the track sideways — intro, then one editorial spread per project — and
- * releases. Scrubbed, so it works both ways.
+ * releases. Scrubbed, so it works both ways. The wheel pages it: one deliberate gesture
+ * moves one panel (intro → each project, centred), see ./usePanelSteps.
  *
  * A spread: the preview, uncovered left → right as it slides in, beside the title in
  * the display face, a crimson hairline, the meta line, what was built, and the stack.
  * Reveals (lib/reveal) follow the track: they play as a spread enters, reverse as it
  * leaves, and replay on the way back. The intro reveals on the vertical approach.
+ * Exit (horizontal only): once the pin releases, the track recedes as Midnight Labs
+ * comes up — it trails the scroll a little (scrubbed, so it returns on the way back
+ * up); Midnight Labs' title settles up to meet it. Movement only: no fade, so the
+ * projects stay fully readable until they leave the screen.
  * Phones and reduced motion: the track stacks vertically, scrolling normally
  * (phones keep the reveals; reduced motion shows everything as is).
  * Content lives in ./projectData.ts.
@@ -32,6 +39,8 @@ export function Projects() {
   const pinRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const introRef = useRef<HTMLElement>(null)
+  const stepsRef = useRef<PanelSteps | null>(null)
+  usePanelSteps(useLenis(), stepsRef)
 
   useGSAP(
     () => {
@@ -55,8 +64,47 @@ export function Projects() {
           },
         })
 
-        createReveals(introRef.current)
+        // Wheel paging stops: the intro at rest, each project centred (clamped to the track's ends).
+        const trigger = slide.scrollTrigger
+        if (trigger) {
+          const stops = () => {
+            const distance = travel()
+            const trackLeft = track.getBoundingClientRect().left
+            const centres = [...track.querySelectorAll('[data-spread]')].map((spread) => {
+              const box = spread.getBoundingClientRect()
+              return gsap.utils.clamp(0, distance, box.left - trackLeft + box.width / 2 - pin.clientWidth / 2)
+            })
+            const xs = [...new Set([0, ...centres, distance].map(Math.round))].sort((a, b) => a - b)
+            return xs.map((x) => trigger.start + (distance ? x / distance : 0) * (trigger.end - trigger.start))
+          }
+          stepsRef.current = { trigger, stops }
+        }
+
+        // Exit: after the release the track trails the scroll slightly (movement only).
+        gsap.fromTo(
+          track,
+          { y: 0 },
+          {
+            y: () => innerHeight * 0.1,
+            ease: 'none',
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: rootRef.current,
+              start: 'bottom bottom',
+              end: 'bottom top',
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          },
+        )
+
+        // The intro sits inside the pin but reveals on the page scroll: measure it against the pin.
+        createReveals(introRef.current, { pinnedContainer: pin })
         track.querySelectorAll('[data-spread]').forEach((spread) => createReveals(spread, { containerAnimation: slide }))
+
+        return () => {
+          stepsRef.current = null
+        }
       })
 
       mm.add(STACKED, () => {
@@ -114,13 +162,15 @@ function ProjectSpread({ project, number }: { project: Project; number: string }
             {number}
           </span>
           {credit && (
-            <span data-reveal="fade" data-reveal-delay="0.3" className="text-right text-accent">
+            <span data-reveal="fade" data-reveal-delay="0.3" className="text-right text-accent-light">
               {credit}
             </span>
           )}
         </div>
 
-        <div data-reveal="clip-x" className="relative aspect-[16/10] overflow-hidden bg-surface">
+        {/* The mount: a hairline edge on the lifted surface, so a dark screenshot (CuraAI's
+            UI is near-black) still reads as an object on the section's black. */}
+        <div data-reveal="clip-x" className="relative aspect-[16/10] overflow-hidden border border-line bg-surface">
           {image ? (
             <img
               data-reveal-zoom
@@ -137,7 +187,7 @@ function ProjectSpread({ project, number }: { project: Project; number: string }
             // No screenshot yet — add `image` in ./projectData.ts to replace this. A deliberate
             // typographic panel (the name in the display face, in the hairline grey) rather than
             // an empty box; decorative, so hidden from assistive tech (the h3 carries the name).
-            <div aria-hidden="true" className="relative flex h-full w-full items-center justify-center border border-line bg-background">
+            <div aria-hidden="true" className="relative flex h-full w-full items-center justify-center">
               <span data-reveal-zoom className="font-display text-[clamp(3rem,9vw,11rem)] leading-none text-line">
                 {title}
               </span>
@@ -169,12 +219,12 @@ function ProjectSpread({ project, number }: { project: Project; number: string }
         <p
           data-reveal="lines"
           data-reveal-delay="0.4"
-          className="mt-6 max-w-[46ch] text-[clamp(1rem,min(1.15vw,2.1svh),1.2rem)] leading-[1.5]"
+          className="readable mt-6 max-w-[46ch] text-[clamp(1.125rem,min(0.85rem+0.55vw,2.4svh),1.625rem)] leading-[1.5]"
         >
           {description}
         </p>
 
-        <ul className="mt-6 max-w-[46ch] space-y-2 text-[clamp(0.9rem,min(1vw,1.85svh),1.05rem)] leading-[1.45] text-muted">
+        <ul className="readable mt-6 max-w-[46ch] space-y-2 text-[clamp(1rem,min(0.75rem+0.45vw,2.1svh),1.375rem)] leading-[1.45] text-muted">
           {highlights.map((line, index) => (
             <li key={line} data-reveal="rise" data-reveal-delay={String(0.5 + index * 0.08)} className="flex gap-3">
               <span aria-hidden="true" className="text-accent">

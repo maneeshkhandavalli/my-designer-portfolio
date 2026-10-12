@@ -33,7 +33,8 @@ npm run lint     # oxlint
 
 - `public/assets/{images,fonts,models}` — served as-is by URL (e.g. `/assets/models/star.glb`).
 - `src/assets/{images,models,fonts}` — imported from code and bundled/hashed by Vite.
-- **Old English Text MT** is a commercial font. It currently resolves from the visitor's installed copy; for production, place a licensed web file at `public/assets/fonts/old-english-text-mt.woff2`. (The build warns about this path until the file exists — expected.)
+- **Old English Text MT** is a commercial Monotype font. It resolves only from the visitor's installed copy (Windows / Microsoft Office); without it, headings fall back to the generic serif. The copy installed with Windows may not be self-hosted. For production, buy a web licence, place the file at `public/assets/fonts/old-english-text-mt.woff2`, and add its `url()` after the `local()` sources in `src/styles/typography.css` (see the comment there). Don't add the `url()` before the file exists: the host answers a missing file with `index.html`.
+- **Nemora** prototype files live in `src/specimen/fonts` and are used only by the dev specimen (`/font-specimen.html`). They are renamed Noto Serif outlines, not the custom typeface. The real typeface is being designed in [`nemora/`](nemora/README.md), a separate workspace (Python tools, UFO source) that the site does not use.
 
 ## Status
 

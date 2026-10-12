@@ -1,9 +1,10 @@
 import type { MouseEvent } from 'react'
-import { RollText } from '@/components/navigation/RollText'
 import { StarMark } from '@/components/navigation/StarMark'
 import { useScrollToSection } from '@/hooks/useScrollToSection'
 
 const YEAR = new Date().getFullYear()
+/** The supplied star (public/assets/images/main-star.png, 683×788) — the source of the site's crimson. */
+const STAR = { src: '/assets/images/main-star.png', width: 683, height: 788 }
 
 type FooterProps = {
   inert?: boolean
@@ -12,9 +13,12 @@ type FooterProps = {
 /**
  * The page's last line, on the Contact section's warm-white ground: the star and the
  * copyright, the Midnight Labs credit (linked to its section — the only verified
- * Midnight Labs destination there is), and the star again as Back to top. Both links
- * travel through Lenis like the navbar's (useScrollToSection: smooth, instant with
- * reduced motion, focus moved, hash updated).
+ * Midnight Labs destination there is), and the supplied crimson star alone as Back to top
+ * (named for assistive tech; it turns a sixth of a turn and grows a touch on hover / focus;
+ * motionless with reduced motion, where the focus ring alone marks it). Both links travel
+ * through Lenis like the navbar's (useScrollToSection: smooth, instant with reduced motion,
+ * focus moved, hash updated). The cursor layers above are pointer-events: none, so they
+ * never take the click.
  */
 export function Footer({ inert }: FooterProps) {
   const scrollToSection = useScrollToSection()
@@ -43,13 +47,17 @@ export function Footer({ inert }: FooterProps) {
           </a>
         </p>
 
-        <a
-          href="#hero"
-          onClick={(event) => go(event, 'hero')}
-          className="group flex w-fit items-center gap-3 text-ink transition-colors duration-300 hover:text-accent focus-visible:text-accent"
-        >
-          <RollText>Back to top</RollText>
-          <StarMark className="h-4 w-auto transition-transform duration-700 ease-out-expo group-hover:-rotate-60 group-focus-visible:-rotate-60 motion-reduce:transition-none" />
+        <a href="#hero" onClick={(event) => go(event, 'hero')} className="group -m-2 block w-fit p-2">
+          <span className="sr-only">Back to top</span>
+          <img
+            src={STAR.src}
+            width={STAR.width}
+            height={STAR.height}
+            alt=""
+            draggable={false}
+            decoding="async"
+            className="h-[clamp(1.5rem,1.6vw,2rem)] w-auto select-none motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out-expo motion-safe:group-hover:scale-110 motion-safe:group-hover:-rotate-60 motion-safe:group-focus-visible:scale-110 motion-safe:group-focus-visible:-rotate-60"
+          />
         </a>
       </div>
     </footer>

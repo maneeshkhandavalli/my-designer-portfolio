@@ -11,7 +11,11 @@ const STORY_COPY =
  * Portrait + story copy beneath the star stage. Reveals start as soon as each
  * element enters the viewport, so it rises through the GradualBlur band at the
  * bottom edge (Story.tsx) — blurred at the edge, sharpening as it scrolls up.
+ * Like every other reveal they reverse as the content leaves and replay on return.
  */
+
+/** Reverse on leave (either way), replay on return — the shared reveal behaviour. */
+const toggle = { end: 'bottom 6%', toggleActions: 'play reverse play reverse' }
 export function StoryContent() {
   const rootRef = useRef<HTMLDivElement>(null)
 
@@ -26,7 +30,7 @@ export function StoryContent() {
             clipPath: 'inset(0% 0% 0% 0%)',
             duration: 1.6,
             ease: MOTION.ease.inOut,
-            scrollTrigger: { trigger: '[data-story-portrait]', start: 'top 98%', once: true },
+            scrollTrigger: { trigger: '[data-story-portrait]', start: 'top 98%', ...toggle },
           },
         )
 
@@ -40,7 +44,7 @@ export function StoryContent() {
               duration: MOTION.duration.reveal,
               ease: MOTION.ease.out,
               stagger: 0.07,
-              scrollTrigger: { trigger: '[data-story-copy]', start: 'top 96%', once: true },
+              scrollTrigger: { trigger: '[data-story-copy]', start: 'top 96%', ...toggle },
             }),
         })
 
@@ -49,7 +53,7 @@ export function StoryContent() {
           y: 10,
           duration: MOTION.duration.slow,
           stagger: 0.1,
-          scrollTrigger: { trigger: '[data-story-copy]', start: 'top 98%', once: true },
+          scrollTrigger: { trigger: '[data-story-copy]', start: 'top 98%', ...toggle },
         })
       })
     },
@@ -79,10 +83,10 @@ export function StoryContent() {
       </figure>
 
       <div className="md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-7">
-        <p data-story-label className="label mb-6 text-accent">
+        <p data-story-label className="label mb-6 text-accent-light">
           The story
         </p>
-        <p data-story-copy className="text-[clamp(1.25rem,1.85vw,1.875rem)] leading-[1.42]">
+        <p data-story-copy className="readable text-[clamp(1.25rem,1.85vw,1.875rem)] leading-[1.42]">
           {STORY_COPY}
         </p>
       </div>

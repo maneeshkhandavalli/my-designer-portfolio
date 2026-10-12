@@ -1,5 +1,6 @@
 import { useCallback, useState, type ReactNode } from 'react'
 import { FluidCursor } from '@/components/effects/FluidCursor/FluidCursor'
+import { StarCursor } from '@/components/effects/StarCursor/StarCursor'
 import { MenuOverlay } from '@/components/navigation/MenuOverlay'
 import { SiteNav } from '@/components/navigation/SiteNav'
 import { useChromeTone } from '@/hooks/useChromeTone'
@@ -12,7 +13,7 @@ type AppShellProps = {
   children: ReactNode
 }
 
-/** Page chrome shared by every section: skip link, frame, loader, navigation, menu, main landmark, footer, fluid cursor field. */
+/** Page chrome shared by every section: skip link, frame, loader, navigation, menu, main landmark, footer, fluid cursor field, star cursor. */
 export function AppShell({ children }: AppShellProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const toggleMenu = useCallback(() => setMenuOpen((open) => !open), [])
@@ -38,6 +39,8 @@ export function AppShell({ children }: AppShellProps) {
       </main>
       <Footer inert={menuOpen} />
       <FluidCursor paused={menuOpen || fluidHeld} />
+      {/* The navbar star, flying to the pointer — home while the menu or a fluid experiment has it. */}
+      <StarCursor paused={menuOpen || fluidHeld} />
     </>
   )
 }

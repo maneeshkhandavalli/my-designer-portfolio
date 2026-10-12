@@ -19,8 +19,12 @@ const pad = (n: number) => String(n).padStart(2, '0')
  *   exit       the agency's own line, then a full-width hairline that draws across:
  *              the hand-over to the next section (My Creations)
  *
- * Every element uses the shared reveals (lib/reveal): in on enter, reversed on leave,
- * replayed on return; reduced motion shows everything as is. No pin, no blur, no
+ * Ground: `.ground-midnight` (globals.css) — the night tone, lifted from Featured Work's
+ * black at the top, easing into My Creations' warm canvas below the exit hairline.
+ *
+ * Motion: the shared reveals (lib/reveal) — in on enter, reversed on leave, replayed on
+ * return; lists and client rows enter as one staggered group each, and the title settles
+ * up into place as the section arrives from Featured Work. Reduced motion: all as is. No pin, no blur, no
  * loops — transforms, opacity and clip-path only. Content: ./midnightLabsData.ts.
  */
 export function MidnightLabs() {
@@ -32,7 +36,7 @@ export function MidnightLabs() {
       ref={rootRef}
       id="midnight-labs"
       aria-labelledby="midnight-labs-heading"
-      className="px-(--frame-gutter) pt-[18svh] pb-[14svh]"
+      className="ground-midnight px-(--frame-gutter) pt-[18svh] pb-[14svh]"
     >
       {/* Intro */}
       <header className="grid grid-cols-1 gap-y-10 md:grid-cols-12 md:gap-x-6">
@@ -46,6 +50,7 @@ export function MidnightLabs() {
         <h2
           id="midnight-labs-heading"
           data-reveal="lines"
+          data-settle-y="9"
           className="text-[clamp(2.5rem,12.5vw,15rem)] leading-[0.85] lowercase md:col-span-11"
         >
           midnight labs
@@ -74,15 +79,18 @@ export function MidnightLabs() {
           <p
             data-reveal="lines"
             data-reveal-delay="0.35"
-            className="mt-6 max-w-[46ch] text-[clamp(1rem,1.15vw,1.2rem)] leading-[1.5] text-muted"
+            className="readable mt-6 max-w-[46ch] text-support text-muted"
           >
             {AGENCY.built}
           </p>
-          <ul aria-label="Services" className="label mt-8 flex flex-wrap gap-x-5 gap-y-2 text-muted">
-            {AGENCY.services.map((service, index) => (
-              <li key={service} data-reveal="rise" data-reveal-delay={String(0.45 + index * 0.05)}>
-                {service}
-              </li>
+          <ul
+            aria-label="Services"
+            data-reveal="group"
+            data-reveal-delay="0.45"
+            className="label mt-8 flex flex-wrap gap-x-5 gap-y-2 text-muted"
+          >
+            {AGENCY.services.map((service) => (
+              <li key={service}>{service}</li>
             ))}
           </ul>
         </div>
@@ -139,9 +147,9 @@ function AgencyPanel({ piece, number, className }: { piece: AgencyPiece; number:
 
   return (
     <figure className={className}>
-      <div className="label mb-4 flex items-baseline gap-4 text-muted">
-        <span data-reveal="fade">{number}</span>
-        <span data-reveal="fade" data-reveal-delay="0.1" className="text-foreground">
+      <div data-reveal="group" className="label mb-4 flex items-baseline gap-4 text-muted">
+        <span>{number}</span>
+        <span className="text-foreground">
           {title}
         </span>
       </div>
@@ -187,7 +195,7 @@ function AgencyPanel({ piece, number, className }: { piece: AgencyPiece; number:
       )}
 
       <figcaption className="mt-5 grid gap-y-3">
-        <p data-reveal="lines" data-reveal-delay="0.2" className="max-w-[52ch] text-[clamp(1rem,1.1vw,1.15rem)] leading-[1.5]">
+        <p data-reveal="lines" data-reveal-delay="0.2" className="readable max-w-[52ch] text-support">
           {description}
         </p>
         <p data-reveal="rise" data-reveal-delay="0.3" className="label text-muted">
@@ -202,39 +210,40 @@ function ClientRow({ work, number }: { work: ClientWork; number: string }) {
   const { name, kind, description, stack, href, visual } = work
 
   return (
-    <li className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-5 border-b border-line py-8 md:grid-cols-12 md:items-center md:gap-x-6 md:py-10">
-      <span data-reveal="fade" className="label text-muted md:col-span-1">
+    // One trigger per row: its four columns rise in together, in a short stagger.
+    <li
+      data-reveal="group"
+      className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-5 border-b border-line py-8 md:grid-cols-12 md:items-center md:gap-x-6 md:py-10"
+    >
+      <span className="label text-muted md:col-span-1">
         {number}
       </span>
       <div className="md:col-span-4">
         <h4
-          data-reveal="lines"
           className="font-display text-[clamp(2rem,3.6vw,4.25rem)] leading-[0.95] font-normal [font-synthesis:none]"
         >
           {name}
         </h4>
-        <p data-reveal="rise" data-reveal-delay="0.1" className="label mt-3 text-accent">
+        <p className="label mt-3 text-accent-light">
           {kind}
         </p>
       </div>
 
       <div className="col-span-2 md:col-span-4">
-        <p data-reveal="lines" data-reveal-delay="0.15" className="max-w-[44ch] text-[clamp(1rem,1.1vw,1.15rem)] leading-[1.5] text-muted">
+        <p className="readable max-w-[44ch] text-support text-muted">
           {description}
         </p>
         {stack && (
-          <p data-reveal="rise" data-reveal-delay="0.25" className="label mt-4 text-muted">
+          <p className="label mt-4 text-muted">
             {stack.join(' · ')}
           </p>
         )}
       </div>
 
-      <div className="col-span-2 flex items-end justify-between gap-6 md:col-span-3 md:items-center">
+      <div className="col-span-2 flex flex-wrap items-end justify-between gap-x-6 gap-y-4 md:col-span-3 md:items-center">
         <ClientVisual visual={visual} />
         {href ? (
           <a
-            data-reveal="rise"
-            data-reveal-delay="0.3"
             href={href}
             target="_blank"
             rel="noopener noreferrer"
@@ -253,8 +262,6 @@ function ClientRow({ work, number }: { work: ClientWork; number: string }) {
 function ClientVisual({ visual }: { visual: ClientWork['visual'] }) {
   return (
     <div
-      data-reveal="clip-x"
-      data-reveal-delay="0.2"
       className="relative aspect-square w-[min(9.5rem,34vw)] shrink-0 overflow-hidden border border-line bg-surface"
     >
       {visual.type === 'image' ? (
