@@ -37,6 +37,9 @@
   /* Hairline dividers and placeholder surfaces on black. */
   --color-line: #3a3a37;
   --color-surface: #141413;
+  /* Midnight Labs' ground: the black lifted a step, warm like the canvas — a second dark
+     room after Featured Work's pure black, so the two don't read as one block. */
+  --color-night: #121110;
 }
 
 :root {
@@ -72,6 +75,29 @@
       rgb(240 112 62 / 0.6) 52%,
       rgb(244 152 104 / 0.22) 68%,
       rgb(244 152 104 / 0) 82%
+    );
+  }
+
+  /*
+   * Midnight Labs' ground (sections/MidnightLabs). One static gradient, painted once:
+   *   top     Featured Work's black lifts into the night tone over the opening 28svh
+   *           (no seam where the two dark sections meet)
+   *   bottom  the last 14svh — below the section's exit hairline — eases into the warm
+   *           canvas My Creations opens on: an S-curve in OKLab, so the hand-over from
+   *           the dark middle to the light close is a dawn, not a grey band or a hard cut.
+   * Text above it is white/muted throughout; the eased band holds no content.
+   */
+  .ground-midnight {
+    background-color: var(--color-night);
+    background-image: linear-gradient(
+      in oklab to bottom,
+      var(--color-background) 0,
+      var(--color-night) 28svh,
+      var(--color-night) calc(100% - 14svh),
+      color-mix(in oklab, var(--color-canvas) 10%, var(--color-night)) calc(100% - 10.5svh),
+      color-mix(in oklab, var(--color-canvas) 50%, var(--color-night)) calc(100% - 7svh),
+      color-mix(in oklab, var(--color-canvas) 90%, var(--color-night)) calc(100% - 3.5svh),
+      var(--color-canvas) 100%
     );
   }
 

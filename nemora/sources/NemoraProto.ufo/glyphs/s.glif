@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="s" format="2">
+  <advance width="250"/>
+  <unicode hex="0073"/>
+  <outline>
+    <contour>
+      <point x="206" y="57" type="line"/>
+      <point x="234" y="74"/>
+      <point x="256" y="106"/>
+      <point x="255" y="146" type="curve" smooth="yes"/>
+      <point x="254" y="190"/>
+      <point x="217" y="240"/>
+      <point x="180" y="289" type="curve" smooth="yes"/>
+      <point x="142" y="340"/>
+      <point x="104" y="390"/>
+      <point x="107" y="434" type="curve" smooth="yes"/>
+      <point x="108" y="449"/>
+      <point x="111" y="462"/>
+      <point x="116" y="472" type="curve"/>
+      <point x="135" y="470"/>
+      <point x="150" y="459"/>
+      <point x="156" y="434" type="curve" smooth="yes"/>
+      <point x="159" y="421"/>
+      <point x="171" y="416"/>
+      <point x="183" y="422" type="curve"/>
+      <point x="247" y="459" type="line"/>
+      <point x="249" y="461"/>
+      <point x="251" y="464"/>
+      <point x="250" y="467" type="curve"/>
+      <point x="239" y="515"/>
+      <point x="186" y="531"/>
+      <point x="147" y="509" type="curve" smooth="yes"/>
+      <point x="131" y="500" type="line"/>
+      <point x="109" y="500"/>
+      <point x="86" y="489"/>
+      <point x="72" y="466" type="curve"/>
+      <point x="57" y="457" type="line" smooth="yes"/>
+      <point x="36" y="445"/>
+      <point x="20" y="421"/>
+      <point x="17" y="382" type="curve" smooth="yes"/>
+      <point x="14" y="338"/>
+      <point x="52" y="288"/>
+      <point x="90" y="237" type="curve" smooth="yes"/>
+      <point x="127" y="188"/>
+      <point x="164" y="138"/>
+      <point x="165" y="94" type="curve" smooth="yes"/>
+      <point x="165" y="72"/>
+      <point x="159" y="52"/>
+      <point x="149" y="36" type="curve"/>
+      <point x="129" y="36"/>
+      <point x="111" y="46"/>
+      <point x="97" y="74" type="curve"/>
+      <point x="90" y="86"/>
+      <point x="75" y="90"/>
+      <point x="63" y="84" type="curve"/>
+      <point x="-1" y="47" type="line"/>
+      <point x="-3" y="45"/>
+      <point x="-4" y="42"/>
+      <point x="-3" y="39" type="curve"/>
+      <point x="26" y="-16"/>
+      <point x="76" y="-17"/>
+      <point x="115" y="5" type="curve" smooth="yes"/>
+      <point x="126" y="11" type="line"/>
+      <point x="153" y="13"/>
+      <point x="179" y="28"/>
+      <point x="196" y="52" type="curve"/>
+    </contour>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.nemora.note</key>
+      <string>A single nib pull; the spine is the only heavy diagonal, both terminals are soft nib cuts.</string>
+      <key>com.nemora.seedHash</key>
+      <string>83f238e3f3a6ed17242ae89a49056441a0529145</string>
+      <key>com.nemora.skeleton</key>
+      <array>
+        <string>M206 436 C190 510 70 520 62 408 C56 322 208 210 210 120 C212 26 90 -26 40 70</string>
+      </array>
+      <key>com.nemora.status</key>
+      <string>prototype — Phase 1 construction, not final</string>
+    </dict>
+  </lib>
+</glyph>

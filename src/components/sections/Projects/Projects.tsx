@@ -168,7 +168,9 @@ function ProjectSpread({ project, number }: { project: Project; number: string }
           )}
         </div>
 
-        <div data-reveal="clip-x" className="relative aspect-[16/10] overflow-hidden bg-surface">
+        {/* The mount: a hairline edge on the lifted surface, so a dark screenshot (CuraAI's
+            UI is near-black) still reads as an object on the section's black. */}
+        <div data-reveal="clip-x" className="relative aspect-[16/10] overflow-hidden border border-line bg-surface">
           {image ? (
             <img
               data-reveal-zoom
@@ -185,7 +187,7 @@ function ProjectSpread({ project, number }: { project: Project; number: string }
             // No screenshot yet — add `image` in ./projectData.ts to replace this. A deliberate
             // typographic panel (the name in the display face, in the hairline grey) rather than
             // an empty box; decorative, so hidden from assistive tech (the h3 carries the name).
-            <div aria-hidden="true" className="relative flex h-full w-full items-center justify-center border border-line bg-background">
+            <div aria-hidden="true" className="relative flex h-full w-full items-center justify-center">
               <span data-reveal-zoom className="font-display text-[clamp(3rem,9vw,11rem)] leading-none text-line">
                 {title}
               </span>

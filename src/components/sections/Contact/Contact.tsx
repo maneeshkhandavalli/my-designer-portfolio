@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { Section } from '@/components/layout/Section'
 import { RollText } from '@/components/navigation/RollText'
 import { useReveal } from '@/hooks/useReveal'
-import { setPageTone } from '@/lib/chromeTone'
-import { ScrollTrigger, useGSAP } from '@/lib/gsap'
 
 const EMAIL = 'maneeshkhandavalliwork@gmail.com'
 
@@ -24,9 +22,9 @@ type CopyState = 'idle' | 'copied' | 'failed'
  *            element on the right (mailto) with a copy control, then the two
  *            profiles as hairline rows
  *
- * Chrome: while this section is under the navbar the page tone is light (ink navbar
- * and frame line, no black matte) — the same state as over the Hero. Story sets the
- * tone above; this takes over from the top of this section to the end of the page.
+ * Ground: the last section of the light closing act that My Creations opens (Skills
+ * above, the Footer below, all on the canvas). Chrome: light (ink navbar and frame line,
+ * no black matte) — set by My Creations' trigger, which covers the page from there down.
  * Motion: the shared reveals (lib/reveal); "talk." settles in from the right with the
  * scroll — the closing movement (clipped at the section's sides, so it never widens the
  * page) — and the profiles enter as one group. The Footer stays
@@ -36,26 +34,6 @@ export function Contact() {
   const rootRef = useRef<HTMLElement>(null)
   const [copy, setCopy] = useState<CopyState>('idle')
   useReveal(rootRef)
-
-  useGSAP(
-    () => {
-      ScrollTrigger.create({
-        trigger: rootRef.current,
-        start: 'top 6%',
-        end: 'max',
-        // Light from here down; leaving upwards hands back to the dark page. (Reaching the
-        // very bottom counts as "leaving" an end of 'max' — the tone stays light then.)
-        // On refresh only claim the tone when here: above, Story's trigger has just set it.
-        onEnter: () => setPageTone(false, false),
-        onEnterBack: () => setPageTone(false, false),
-        onLeaveBack: () => setPageTone(true, true),
-        onRefresh: ({ progress }) => {
-          if (progress > 0) setPageTone(false, false)
-        },
-      })
-    },
-    { scope: rootRef },
-  )
 
   useEffect(() => {
     if (copy === 'idle') return

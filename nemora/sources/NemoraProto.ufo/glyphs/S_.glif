@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="S" format="2">
+  <advance width="400"/>
+  <unicode hex="0053"/>
+  <outline>
+    <contour>
+      <point x="310" y="77" type="line" smooth="yes"/>
+      <point x="355" y="103"/>
+      <point x="387" y="152"/>
+      <point x="384" y="211" type="curve" smooth="yes"/>
+      <point x="379" y="288"/>
+      <point x="311" y="354"/>
+      <point x="248" y="416" type="curve" smooth="yes"/>
+      <point x="233" y="431"/>
+      <point x="219" y="444"/>
+      <point x="206" y="458" type="curve"/>
+      <point x="206" y="555" type="line" smooth="yes"/>
+      <point x="206" y="558"/>
+      <point x="204" y="560"/>
+      <point x="201" y="560" type="curve" smooth="yes"/>
+      <point x="195" y="560" type="line" smooth="yes"/>
+      <point x="190" y="560"/>
+      <point x="186" y="556"/>
+      <point x="186" y="551" type="curve" smooth="yes"/>
+      <point x="186" y="480" type="line"/>
+      <point x="154" y="517"/>
+      <point x="131" y="554"/>
+      <point x="134" y="591" type="curve" smooth="yes"/>
+      <point x="135" y="621"/>
+      <point x="144" y="646"/>
+      <point x="157" y="665" type="curve"/>
+      <point x="210" y="674"/>
+      <point x="262" y="657"/>
+      <point x="271" y="602" type="curve" smooth="yes"/>
+      <point x="274" y="586"/>
+      <point x="288" y="580"/>
+      <point x="302" y="588" type="curve" smooth="yes"/>
+      <point x="378" y="632" type="line"/>
+      <point x="381" y="634"/>
+      <point x="383" y="638"/>
+      <point x="383" y="641" type="curve"/>
+      <point x="369" y="719"/>
+      <point x="267" y="743"/>
+      <point x="197" y="703" type="curve" smooth="yes"/>
+      <point x="184" y="696" type="line"/>
+      <point x="154" y="691"/>
+      <point x="124" y="676"/>
+      <point x="104" y="649" type="curve"/>
+      <point x="89" y="641" type="line" smooth="yes"/>
+      <point x="55" y="621"/>
+      <point x="30" y="585"/>
+      <point x="26" y="529" type="curve" smooth="yes"/>
+      <point x="22" y="470"/>
+      <point x="80" y="414"/>
+      <point x="140" y="354" type="curve" smooth="yes"/>
+      <point x="204" y="292"/>
+      <point x="271" y="226"/>
+      <point x="276" y="149" type="curve" smooth="yes"/>
+      <point x="278" y="113"/>
+      <point x="268" y="82"/>
+      <point x="249" y="56" type="curve"/>
+      <point x="201" y="50"/>
+      <point x="150" y="68"/>
+      <point x="111" y="122" type="curve" smooth="yes"/>
+      <point x="109" y="125"/>
+      <point x="105" y="126"/>
+      <point x="102" y="124" type="curve"/>
+      <point x="26" y="80" type="line" smooth="yes"/>
+      <point x="12" y="72"/>
+      <point x="8" y="54"/>
+      <point x="17" y="41" type="curve" smooth="yes"/>
+      <point x="73" y="-38"/>
+      <point x="142" y="-20"/>
+      <point x="203" y="15" type="curve" smooth="yes"/>
+      <point x="212" y="20" type="line"/>
+      <point x="247" y="27"/>
+      <point x="279" y="45"/>
+      <point x="301" y="72" type="curve"/>
+    </contour>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.nemora.note</key>
+      <string>The s pull at capital scale; the echo hairline stands in the upper counter.</string>
+      <key>com.nemora.seedHash</key>
+      <string>172a8bd893240845b7868854ab7dfcf6c5308494</string>
+      <key>com.nemora.skeleton</key>
+      <array>
+        <string>M330 604 C310 720 90 730 80 560 C72 440 320 330 330 180 C338 40 150 -40 54 96</string>
+      </array>
+      <key>com.nemora.status</key>
+      <string>prototype — Phase 1 construction, not final</string>
+    </dict>
+  </lib>
+</glyph>

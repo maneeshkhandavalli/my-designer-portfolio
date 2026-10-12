@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="n" format="2">
+  <advance width="384"/>
+  <unicode hex="006E"/>
+  <outline>
+    <contour>
+      <point x="42" y="475" type="line"/>
+      <point x="40" y="473"/>
+      <point x="38" y="470"/>
+      <point x="38" y="467" type="curve" smooth="yes"/>
+      <point x="38" y="1" type="line" smooth="yes"/>
+      <point x="38" y="-13"/>
+      <point x="48" y="-18"/>
+      <point x="60" y="-12" type="curve"/>
+      <point x="124" y="25" type="line"/>
+      <point x="126" y="27"/>
+      <point x="128" y="30"/>
+      <point x="128" y="33" type="curve" smooth="yes"/>
+      <point x="128" y="384" type="line"/>
+      <point x="128" y="384"/>
+      <point x="129" y="385"/>
+      <point x="129" y="386" type="curve"/>
+      <point x="146" y="395" type="line"/>
+      <point x="149" y="397"/>
+      <point x="152" y="399"/>
+      <point x="155" y="401" type="curve"/>
+      <point x="167" y="410"/>
+      <point x="178" y="429"/>
+      <point x="189" y="448" type="curve"/>
+      <point x="226" y="447"/>
+      <point x="256" y="439"/>
+      <point x="256" y="399" type="curve" smooth="yes"/>
+      <point x="256" y="1" type="line" smooth="yes"/>
+      <point x="256" y="-13"/>
+      <point x="266" y="-18"/>
+      <point x="278" y="-12" type="curve"/>
+      <point x="342" y="25" type="line"/>
+      <point x="344" y="27"/>
+      <point x="346" y="30"/>
+      <point x="346" y="33" type="curve" smooth="yes"/>
+      <point x="346" y="499" type="line" smooth="yes"/>
+      <point x="346" y="513"/>
+      <point x="336" y="518"/>
+      <point x="324" y="512" type="curve"/>
+      <point x="294" y="494" type="line"/>
+      <point x="280" y="498"/>
+      <point x="264" y="500"/>
+      <point x="248" y="500" type="curve" smooth="yes"/>
+      <point x="241" y="500"/>
+      <point x="235" y="498"/>
+      <point x="229" y="495" type="curve"/>
+      <point x="206" y="482" type="line"/>
+      <point x="204" y="482"/>
+      <point x="201" y="482"/>
+      <point x="198" y="482" type="curve" smooth="yes"/>
+      <point x="181" y="482"/>
+      <point x="166" y="468"/>
+      <point x="153" y="451" type="curve"/>
+      <point x="139" y="443" type="line"/>
+      <point x="135" y="440"/>
+      <point x="131" y="438"/>
+      <point x="128" y="435" type="curve"/>
+      <point x="128" y="499" type="line" smooth="yes"/>
+      <point x="128" y="513"/>
+      <point x="118" y="518"/>
+      <point x="106" y="512" type="curve"/>
+    </contour>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.nemora.note</key>
+      <string>Two minims joined by one shoulder; the notch between the left head and the shoulder is the lowercase signature.</string>
+      <key>com.nemora.seedHash</key>
+      <string>e61af354bda6dc3fa5d74e8f806ea1b79165fe65</string>
+      <key>com.nemora.skeleton</key>
+      <array>
+        <string>M83 498 L83 2</string>
+        <string>M106 372 C135 392 159 474 203 474 C252 474 301 451 301 400</string>
+        <string>M301 498 L301 2</string>
+      </array>
+      <key>com.nemora.status</key>
+      <string>prototype — Phase 1 construction, not final</string>
+    </dict>
+  </lib>
+</glyph>

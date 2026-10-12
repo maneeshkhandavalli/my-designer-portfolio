@@ -1,0 +1,7 @@
+# Nemora font toolchain — tested on Python 3.14 (Windows), 2026-10-12.
+# Installed into nemora/.venv only; the portfolio's npm build does not use any of this.
+fonttools[ufo,woff]==4.66.1   # font compiler core; WOFF2 (brotli)
+ufoLib2==0.19.0               # UFO 3 source read/write
+typing_extensions>=4.12       # needed by ufoLib2 0.19 on 3.14, not declared by it
+ufo2ft==3.9.1                 # UFO -> OpenType (CFF) compiler
+skia-pathops==0.9.2           # overlap removal when compiling

@@ -2,46 +2,36 @@
  * Typography
  *
  * DISPLAY — Old English Text MT (major headings only).
- *   Commercial Monotype font with no public web-font CDN. It resolves from the
- *   visitor's installed copy first, then from a self-hosted file once supplied at:
- *     public/assets/fonts/old-english-text-mt.woff2
+ *   Commercial Monotype font (v1.55, PostScript name OldEnglishTextMT) with no public
+ *   web-font CDN. It resolves only from the visitor's installed copy (it ships with
+ *   Windows / Microsoft Office); elsewhere — phones, most Macs, Linux — headings fall
+ *   back to the generic serif. The installed system file may not be self-hosted: that
+ *   needs a web licence from Monotype. Once a licensed web file exists, put it at
+ *   public/assets/fonts/old-english-text-mt.woff2 and add, after the local() sources:
+ *     url('/assets/fonts/old-english-text-mt.woff2') format('woff2')
+ *   (Never list that url before the file exists: the host answers a missing file with
+ *   index.html, which the browser downloads and rejects as a font.)
  *   Do not substitute another blackletter face.
  *
  * BODY / UI — Imbue (navigation, body copy, descriptions, UI).
- *   Loaded from Google Fonts in index.html.
+ *   Loaded from Google Fonts in index.html: the variable font, opsz 10–100 and
+ *   wght 100–900, so the weights (400 / 500 / 600) and the text cut ('opsz' 10) used
+ *   below are real instances, never synthesised.
  *
  * To change a typeface: update its source (@font-face below or the <link> in
  * index.html) and the matching --font-* token. Components only use the tokens
  * (font-display / font-body utilities), never family names directly.
  *
- * NEMORA (testing only) — prototype files for the planned custom typeface.
- *   Their outlines are Noto Serif with Nemora metadata, NOT the final custom
- *   glyphs. Registered here so they can be compared (font-specimen.html, dev only);
- *   nothing on the site uses them, so browsers never download them for the site.
+ * NEMORA — not part of the site. The prototype files (Noto Serif outlines with Nemora
+ *   metadata, not custom glyphs) and their @font-face rules live with the dev-only
+ *   specimen in src/specimen.
  */
 
 @font-face {
   font-family: 'Old English Text MT';
   src:
     local('Old English Text MT'),
-    local('OldEnglishTextMT'),
-    url('/assets/fonts/old-english-text-mt.woff2') format('woff2');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Nemora Display';
-  src: url('/assets/fonts/Nemora-Display.woff2') format('woff2');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Nemora Text';
-  src: url('/assets/fonts/Nemora-Text.woff2') format('woff2');
+    local('OldEnglishTextMT');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -51,9 +41,6 @@
   --font-display: 'Old English Text MT', serif;
   --font-body: 'Imbue', serif;
   --default-font-family: var(--font-body);
-  /* Prototype tokens for the specimen — not used by the site. */
-  --font-nemora-display: 'Nemora Display', serif;
-  --font-nemora-text: 'Nemora Text', serif;
 
   /* Fluid type scale */
   /* Hero name: width-led, capped by height so short/wide screens still fit the Hero.

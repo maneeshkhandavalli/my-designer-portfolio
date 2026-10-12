@@ -1,3 +1,31 @@
 /* Temporary font specimen: the site's shared styles; Tailwind scans this folder too
    (only the portfolio's own entry, styles/site.css, leaves it out). */
 @import '../styles/globals.css';
+
+/*
+ * NEMORA PROTOTYPES (specimen only — never registered by the site).
+ * ./fonts/Nemora-*.woff2 are Noto Serif Display / Noto Serif Regular with renamed
+ * metadata: every outline is identical to Noto's (audited 2026-10-12), so they show
+ * sizing and integration, not the custom Nemora letterforms. Replace the files (same
+ * names) when the real glyphs exist. Vite bundles them only into the specimen build.
+ */
+@font-face {
+  font-family: 'Nemora Display';
+  src: url('./fonts/Nemora-Display.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nemora Text';
+  src: url('./fonts/Nemora-Text.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@theme {
+  --font-nemora-display: 'Nemora Display', serif;
+  --font-nemora-text: 'Nemora Text', serif;
+}

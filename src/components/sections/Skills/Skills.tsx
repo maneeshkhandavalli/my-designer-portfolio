@@ -13,10 +13,14 @@ const ENTRIES = SKILL_GROUPS.reduce((sum, group) => sum + group.skills.length, 0
  *   left   (desktop: CSS-sticky under the nav; sized by viewport height so it always fits
  *          a short laptop screen) the title, a crimson rule, one line on
  *          what counts, the totals, and a contents list that follows the reader —
- *          the group in view is set in warm white with a crimson tick
+ *          the group in view is set in ink with a crimson tick
  *   right  the six groups: number, lowercase display title, where it comes from, then
  *          the entries as a two-column table of hairline rows (number.item, name, note)
  * On phones: stacked, no sticky, no contents list.
+ *
+ * Ground: the warm-white canvas, in the middle of the light closing act (My Creations
+ * above, Contact below — My Creations' trigger keeps the chrome light) — an index set
+ * like a book's, in ink on paper.
  *
  * Motion: the groups use the shared reveals (lib/reveal) — in, reversed on leave,
  * replayed on return; each group's entries enter as one staggered list (one trigger). The sticky column is revealed on the *section's* bounds instead:
@@ -95,9 +99,9 @@ export function Skills() {
       ref={rootRef}
       id="skills"
       aria-labelledby="skills-heading"
-      className="px-(--frame-gutter) pt-[18svh] pb-[14svh]"
+      className="bg-canvas px-(--frame-gutter) pt-[18svh] pb-[14svh] text-ink"
     >
-      <div className="label mb-10 flex justify-between gap-6 text-muted">
+      <div className="label mb-10 flex justify-between gap-6 text-panel-muted">
         <span data-reveal="fade">06 — Skills</span>
         <span data-reveal="fade" data-reveal-delay="0.15">
           The index
@@ -118,26 +122,26 @@ export function Skills() {
           <p data-skills-lines className="mt-8 max-w-[30ch] text-[clamp(1.25rem,min(1.9vw,3.6svh),2rem)] leading-[1.2] md:mt-[3.5svh]">
             What I build with. Every entry is on my résumé or in the code behind this site.
           </p>
-          <p data-skills-fade className="label mt-6 text-muted md:mt-[2.5svh]">
+          <p data-skills-fade className="label mt-6 text-panel-muted md:mt-[2.5svh]">
             {pad(SKILL_GROUPS.length)} groups · {ENTRIES} entries
           </p>
 
-          <ol aria-hidden="true" className="mt-[5svh] hidden border-t border-line md:block">
+          <ol aria-hidden="true" className="mt-[5svh] hidden border-t border-ink/15 md:block">
             {SKILL_GROUPS.map((group, index) => {
               const current = index === active
               return (
                 <li
                   key={group.title}
                   data-skills-fade
-                  className="relative flex items-baseline gap-4 border-b border-line py-[min(0.625rem,1.1svh)]"
+                  className="relative flex items-baseline gap-4 border-b border-ink/15 py-[min(0.625rem,1.1svh)]"
                 >
                   <span
-                    className={`label w-6 transition-colors duration-500 motion-reduce:transition-none ${current ? 'text-accent-light' : 'text-muted'}`}
+                    className={`label w-6 transition-colors duration-500 motion-reduce:transition-none ${current ? 'text-accent' : 'text-panel-muted'}`}
                   >
                     {pad(index + 1)}
                   </span>
                   <span
-                    className={`readable text-[clamp(1rem,min(0.75rem+0.45vw,2.4svh),1.375rem)] leading-[1.5] transition-colors duration-500 motion-reduce:transition-none ${current ? 'text-foreground' : 'text-muted'}`}
+                    className={`readable text-[clamp(1rem,min(0.75rem+0.45vw,2.4svh),1.375rem)] leading-[1.5] transition-colors duration-500 motion-reduce:transition-none ${current ? 'text-ink' : 'text-panel-muted'}`}
                   >
                     {group.title}
                   </span>
@@ -162,9 +166,9 @@ export function Skills() {
                 }}
                 className="pb-[9svh] last:pb-0"
               >
-                <div aria-hidden="true" data-reveal="rule" className="h-px bg-line" />
+                <div aria-hidden="true" data-reveal="rule" className="h-px bg-ink/15" />
                 <div className="mt-6 grid grid-cols-[auto_1fr] items-baseline gap-x-5 gap-y-3 md:grid-cols-[auto_1fr_auto]">
-                  <span data-reveal="fade" className="label text-accent-light">
+                  <span data-reveal="fade" className="label text-accent">
                     {number}
                   </span>
                   <h3
@@ -174,7 +178,7 @@ export function Skills() {
                   >
                     {group.title}
                   </h3>
-                  <span data-reveal="fade" data-reveal-delay="0.25" className="label col-start-2 text-muted md:col-start-3">
+                  <span data-reveal="fade" data-reveal-delay="0.25" className="label col-start-2 text-panel-muted md:col-start-3">
                     From {group.source === 'résumé' ? 'the résumé' : 'this site'}
                   </span>
                 </div>
@@ -183,14 +187,14 @@ export function Skills() {
                   {group.skills.map((skill, item) => (
                     <li
                       key={skill.name}
-                      className="grid grid-cols-[2.75rem_1fr] items-baseline gap-x-3 border-t border-line py-3.5"
+                      className="grid grid-cols-[2.75rem_1fr] items-baseline gap-x-3 border-t border-ink/15 py-3.5"
                     >
-                      <span className="label text-muted">
+                      <span className="label text-panel-muted">
                         {number}.{item + 1}
                       </span>
                       <span className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                         <span className="text-[clamp(1.2rem,1.6vw,1.8rem)] leading-[1.15]">{skill.name}</span>
-                        {skill.note && <span className="label text-muted">{skill.note}</span>}
+                        {skill.note && <span className="label text-panel-muted">{skill.note}</span>}
                       </span>
                     </li>
                   ))}

@@ -1,4 +1,7 @@
 /* The portfolio's stylesheet: the shared styles, without the temporary font specimen's
-   utilities (font-specimen.html / src/specimen imports globals.css on its own). */
+   utilities (font-specimen.html / src/specimen imports globals.css on its own), and
+   without scanning the Nemora type-design workspace (nemora/ — not part of the site;
+   Tailwind would otherwise turn words in its docs and tools into utilities). */
 @import './globals.css';
 @source not '../specimen';
+@source not '../../nemora';

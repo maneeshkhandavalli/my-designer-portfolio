@@ -27,10 +27,12 @@ const PREVIEWS: Record<CreationPreview, ComponentType> = {
  *   details  what it is and how it works, under the index
  * On phones: index, preview, details, stacked.
  *
- * Ground: the warm-white canvas — the light studio between the dark Midnight Labs and
- * Skills — with the stage kept black, a dark screen the experiments run in (they are
- * made for a dark surface). Chrome: light (ink navbar and frame, no matte) while this
- * section is under the navbar, like the Hero and Contact.
+ * Ground: the warm-white canvas — this section opens the page's light closing act
+ * (My Creations, Skills, Contact, Footer on one ground, after the dark middle), with the
+ * stage kept black, a dark screen the experiments run in (they are made for a dark
+ * surface). It arrives through Midnight Labs' eased dark → light band and ends on a
+ * hairline, the hand-over to Skills on the same ground. Chrome: light (ink navbar and
+ * frame, no matte) from the middle of that band to the end of the page, like the Hero.
  *
  * Scroll: the shared reveals (lib/reveal) — in on enter, reversed on leave, replayed
  * on return. Switching: the stage and details fade out together, then the stage is
@@ -47,17 +49,24 @@ export function MyCreations() {
   const reducedMotion = usePrefersReducedMotion()
   useReveal(rootRef)
 
-  // Light chrome while the section is under the navbar; the dark page either side of it.
-  // On refresh only claim the tone when here (Story's or Contact's trigger owns it elsewhere).
+  // Light chrome from here to the end of the page (the light closing act). It flips at the
+  // middle of Midnight Labs' dark → light band (7svh above this section), so the navbar
+  // is never ink on the dark side of it or white on the light side. Leaving upwards hands
+  // back to the dark page. (Reaching the very bottom counts as "leaving" an end of 'max' —
+  // the tone stays light then.) On refresh only claim the tone when here: above, Story's
+  // trigger has just set it.
   useGSAP(
     () => {
       ScrollTrigger.create({
         trigger: rootRef.current,
-        start: 'top 6%',
-        end: 'bottom 6%',
-        onToggle: ({ isActive }) => setPageTone(!isActive, !isActive),
-        onRefresh: ({ isActive }) => {
-          if (isActive) setPageTone(false, false)
+        start: () => `top-=${innerHeight * 0.07} 6%`,
+        end: 'max',
+        invalidateOnRefresh: true,
+        onEnter: () => setPageTone(false, false),
+        onEnterBack: () => setPageTone(false, false),
+        onLeaveBack: () => setPageTone(true, true),
+        onRefresh: ({ progress }) => {
+          if (progress > 0) setPageTone(false, false)
         },
       })
     },
@@ -266,6 +275,9 @@ export function MyCreations() {
           </div>
         </div>
       </div>
+
+      {/* Exit: the hairline that hands over to Skills on the same ground. */}
+      <div aria-hidden="true" data-reveal="rule" className="mt-[12svh] h-px bg-ink/15" />
     </Section>
   )
 }

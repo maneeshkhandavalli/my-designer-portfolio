@@ -19,6 +19,9 @@ const pad = (n: number) => String(n).padStart(2, '0')
  *   exit       the agency's own line, then a full-width hairline that draws across:
  *              the hand-over to the next section (My Creations)
  *
+ * Ground: `.ground-midnight` (globals.css) — the night tone, lifted from Featured Work's
+ * black at the top, easing into My Creations' warm canvas below the exit hairline.
+ *
  * Motion: the shared reveals (lib/reveal) — in on enter, reversed on leave, replayed on
  * return; lists and client rows enter as one staggered group each, and the title settles
  * up into place as the section arrives from Featured Work. Reduced motion: all as is. No pin, no blur, no
@@ -33,7 +36,7 @@ export function MidnightLabs() {
       ref={rootRef}
       id="midnight-labs"
       aria-labelledby="midnight-labs-heading"
-      className="px-(--frame-gutter) pt-[18svh] pb-[14svh]"
+      className="ground-midnight px-(--frame-gutter) pt-[18svh] pb-[14svh]"
     >
       {/* Intro */}
       <header className="grid grid-cols-1 gap-y-10 md:grid-cols-12 md:gap-x-6">
